@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 5px;
+}
+
+#view-highscore {
+    width: fit-content;
+    background-color: white;
+    border: none
+}
+
+#view-highscore:hover {
+    background-color: grey;
+    border: none
+}
+
+#countdown {
+    width: fit-content;
+    float: right;
+    position: relative;
+    top: -50px;
+}
+
+.button {
+    color: white;
+    background-color: purple;
+    width:fit-content;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px;
+}
+
+.button:hover {
+    border : 2px solid grey;
+    font-weight: bold;
+    background-color: rgb(156, 73, 119);
+}
+
+#start-button {
+    position: absolute;
+    top: 110px;
+    left: 165px;
+    height: 40px;
+    font-size: 20px;
+}
+
+.card{
+    position: relative;
+    left: 30%;
+    width: 450px;
+    left: 30%;
+}
+
+#card-4 {
+    margin-top: 60px;
+}
+
+#question {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.choice {
+    display: block;
+    border-radius: 10px;
+    width : 200px;
+    color: white;
+    background-color: purple;
+    cursor: pointer;
+    padding : 5px;
+    margin: 10px;
+}
+
+.choice:hover {
+    border : 2px solid grey;
+    font-weight: bold;
+    background-color: rgb(156, 73, 119);
+}
+
+#answer-message {
+    font-style: italic;
+    width: 60%;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+#initials {
+    border: solid 2px rgb(83, 38, 245);
+}
+
+#highscores-list {
+    background-color:rgb(197, 194, 196);
+}
