@@ -10,5 +10,5 @@ SO THAT I can gauge my progress compared to my peers
 ```
 
 gitHub: https://github.com/Kel03-byte/Javascript-Quiz
-Deployed website:
+Deployed website:  https://kel03-byte.github.io/Javascript-Quiz/
 Screenshot of deployed website:
