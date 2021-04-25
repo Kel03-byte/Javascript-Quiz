@@ -20,19 +20,18 @@ var veiwHighscore = document.getElementById("view-highscore"); //link to veiw th
 var currentQuestion = 0; //Sets the current question to 0
 var totalSeconds = 75; //Sets the count down to 75 seconds
 var timeRemaining = totalSeconds; //Adjusts the countdown to account for wrong answers
-var secondsElapsed = 0; //
-var discountSeconds = 0;
-var time = setInterval(startTimer, 1000);
-
-var initials = document.getElementById("initials");
-var highScoresList = document.getElementById("highscores-list");
-var localHighscoresArray = [];
+var secondsElapsed = 0; //Sets the number of seconds elapse to 0
+var deductedSeconds = 0; //Sets the number for the deducted seconds for wrong answers to 0
+var time = setInterval(startTimer, 1000); //
 
 startButton.addEventListener("click", startQuiz)
-submitButton.addEventListener("click", displayHighscore)
 goBackButton.addEventListener("click", goBackToStartPage)
 clearScores.addEventListener("click", clearHighscores)
 veiwHighscore.addEventListener("click", displayHighscore)
+submitButton.addEventListener("click", function (event){
+    event.preventDefault()
+    console.log(score)
+});
 
 clearInterval(time);
 countDown.innerHTML = "Timer: 0"
@@ -90,7 +89,7 @@ function startQuiz() {
 
 //Starts the timer
 function startTimer() {
-    timeRemaining = totalSeconds - secondsElapsed - 1 - discountSeconds;
+    timeRemaining = totalSeconds - secondsElapsed - 1 - deductedSeconds;
     countDown.textContent = timeRemaining;
     secondsElapsed++;
     countDown.innerHTML = "Timer: " + timeRemaining;
@@ -124,7 +123,7 @@ function checkAnswer(answer) {
     else {
         document.getElementById("answer-message").innerHTML = "Wrong!"
         document.getElementById("answer-message").style.borderTop = "solid"
-        discountSeconds += 10;
+        deductedSeconds += 10;
         clearInterval(time);
         time = setInterval(startTimer, 1000);
     }
@@ -153,28 +152,6 @@ function endQuiz(cause) {
         startCard.innerHTML = "Sorry! Time's up";
     }
 }
-//This function displays the Highscore Page
-function displayHighscore(event) {
-    event.preventDefault()
-    document.getElementById("header").style.display = "none"
-    detailsCard.style.display = "none"
-    highScoreCard.style.display = "block";
-    startCard.style.display = "none",
-        addHighscoresToLocalStorage()
-}
-
-//creates a list for the highscores and adds it to local storage
-function addHighscoresToLocalStorage() {
-    var highScoreElement = document.createElement("li");
-    var highscoreString = initials.value + " - " + timeRemaining;
-    var storedHighscore = localStorage.getItem("highscore");
-    storedHighscore = storedHighscore ? storedHighscore.split(',') : [];
-    storedHighscore.push(highscoreString)
-    localStorage.setItem("highscore", storedHighscore.toString());
-    highScoreElement.textContent = highscoreString;
-    highScoresList.append(highScoreElement);
-    initials.value = "";
-}
 
 //This function displays the final score and allows the user to input their initials to save the score to "local storage"
 function displayDetailsCard() {
@@ -183,11 +160,48 @@ function displayDetailsCard() {
     quizCard.style.display = "none";
 }
 
+
+var highScores = JSON.parse(localStorage.getItem("highscore"))
+var userInitials = document.getElementById("initials");
+var highScoresList = document.getElementById("highscores-list");
+var score = {
+    initials: userInitials.value,
+    score: timeRemaining,
+}
+
+
+
+//This function displays the Highscore Page
+function displayHighscore() {
+    document.getElementById("header").style.display = "none";
+    detailsCard.style.display = "none";
+    highScoreCard.style.display = "block";
+    startCard.style.display = "none";
+}
+
+//stores the current score to local storage
+function storeHighScores() {
+    var initials = document.getElementById("initials");
+    var highscoreString = initials.value + " - " + timeRemaining;
+    var storedHighscores = localStorage.getItem("highscore");
+    storedHighscores = storedHighscores ? storedHighscores.split(',') : [];
+    storedHighscores.push(highscoreString)
+    localStorage.setItem("highscore", storedHighscores.toString())
+
+}
+
+//Creates and displays the High Score list
+function renderHighScores() {
+    var highscoreString = userInitials.value + " - " + timeRemaining;
+    var highScoreElement = document.createElement("li");
+    highScoresList.append(highScoreElement);
+    highScoreElement.textContent = highscoreString;
+}
+
 //This function clears the highscore list
 function clearHighscores() {
-    localHighscoresArray = [];
-    localStorage.setItem("highscore", localHighscoresArray);
     highScoresList.innerHTML = (" ");
+    localStorage.clear()
 }
 
 //This function reloads the web page to the begining
